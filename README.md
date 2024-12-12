@@ -1,7 +1,7 @@
 # AssetTrack: IT Asset Management System
 
 ## Overview
-This repository provides an automated setup for a PostgreSQL-based IT Asset Management System. Designed for tracking hardware, software, and licenses, the project uses Docker for containerization and Terraform for Infrastructure as Code (IaC). It includes a Python Command-Line Interface (CLI) for efficient asset management and report generation.
+This repository provides an automated setup for a PostgreSQL-based IT Asset Management System. Designed for tracking hardware, software, and licenses, the project uses Docker for containerization and Terraform for Infrastructure as Code (IaC). It includes Python scripts for managing assets, database interactions, and report generation.
 
 ## Features
 - **PostgreSQL Database**: Tracks IT assets, licenses, and inventory.
@@ -10,27 +10,30 @@ This repository provides an automated setup for a PostgreSQL-based IT Asset Mana
 - **Monitoring and Reporting**: Integrated Prometheus and Grafana for system health and asset tracking.
 - **Scripts**: Includes Bash scripts for automated database backups and asset reporting.
 - **Containerized Environment**: Ensures consistent development and deployment using Docker.
+- **Python Integration**: Python scripts for asset management, database operations, and report generation.
 
 ## Technologies Used
 - **Database**: PostgreSQL
 - **Containerization**: Docker, Docker Compose
 - **IaC**: Terraform
-- **Monitoring**: Prometheus, Grafana
 - **Automation**: Bash Scripts
 - **Programming**: Python
+- **Monitoring**: Prometheus, Grafana
 
 | Technology               | Purpose                              |
 |--------------------------|--------------------------------------|
-| **PostgreSQL**           | Database for library data            |
-| **Docker**               | Containerization                     |
-| **Terraform**            | Infrastructure provisioning          |
-| **Bash Scripts**         | Automation of routine tasks          |
-| **Prometheus, Grafana**  | Monitoring                           |
+| **PostgreSQL**           | Database for asset data             |
+| **Docker**               | Containerization                    |
+| **Terraform**            | Infrastructure provisioning         |
+| **Python**               | Backend logic for asset management  |
+| **Bash Scripts**         | Automation of routine tasks         |
+| **Prometheus, Grafana**  | Monitoring and visualization        |
 
 ## Prerequisites
 - Install [Docker](https://www.docker.com/)
 - Install [Terraform](https://www.terraform.io/)
 - Install [Git](https://git-scm.com/)
+- Install [Python](https://www.python.org/downloads/)
 - Basic knowledge of Bash and Python
 
 ## Setup Instructions
@@ -67,15 +70,15 @@ Navigate back to the root directory and build the Docker containers:
 docker-compose up --build
 ```
 This will:
-- Build the Docker image for the CLI application.
-- Start PostgreSQL and the CLI application in separate containers.
+- Build the Docker image for the Python CLI application.
+- Start PostgreSQL and the Python application in separate containers.
 
-### 5. Access the CLI Tool
-To interact with the IT Asset Management System, access the CLI tool:
+### 5. Access the Python CLI Tool
+To interact with the IT Asset Management System, access the Python CLI tool:
 ```bash
-docker-compose exec app python asset_management_cli.py
+docker-compose exec app python python/asset_manager.py
 ```
-The CLI provides options to add or remove assets, track licenses, and generate reports.
+The Python CLI provides options to add or remove assets, track licenses, and generate reports.
 
 ### 6. Use Backup and Report Scripts
 Automate database backups and generate asset reports using the provided scripts:
@@ -114,8 +117,17 @@ it-asset-management-setup/
 │   ├── outputs.tf                 # Outputs database connection details
 │
 ├── docker/
-│   ├── Dockerfile                 # Dockerfile for CLI application
+│   ├── Dockerfile                 # Dockerfile for Python CLI application
 │   └── docker-compose.yml         # Docker Compose file for local setup
+│
+├── python/
+│   ├── asset_manager.py           # Core Python logic for asset management
+│   ├── db_connector.py            # Database connection and operations
+│   ├── report_generator.py        # Script for generating asset reports
+│   └── tests/                     # Unit tests for Python scripts
+│       ├── test_asset_manager.py  # Tests for asset manager
+│       ├── test_db_connector.py   # Tests for database connector
+│       └── test_report_generator.py # Tests for report generator
 │
 ├── scripts/
 │   ├── backup.sh                  # Backup script for PostgreSQL database
@@ -139,7 +151,7 @@ it-asset-management-setup/
 ### Logs
 Access logs for debugging:
 - PostgreSQL logs: Run `docker-compose logs db`
-- CLI logs: Run `docker-compose logs app`
+- Python app logs: Run `docker-compose logs app`
 
 ## Future Enhancements
 - Expand to support REST APIs for integration with third-party applications.
@@ -147,8 +159,8 @@ Access logs for debugging:
 - Introduce predictive analytics for asset lifecycle management.
 - Enhance security with role-based access control.
 
----
+```
 
 For any questions or issues, feel free to reach out at `rt07mahifan@gmail.com`.
 
----
+```
